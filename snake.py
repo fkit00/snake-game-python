@@ -1,33 +1,21 @@
-from turtle import Turtle, Screen 
+from turtle import Turtle
 
-screen = Screen()
-screen.setup(width=600,height=600)
-screen.bgcolor("black")
-screen.title("Welcome to the Snake Game")
-screen.tracer(0)
+STARTING_POSITIONS=[(0,0),(-20,0),(-40,0)]
 
-game_is_on = True 
-
-starting_positons=[(0,0),(-20,0),(-40,0)]
-
-segments=[]
-
-## we want to make a snake body - three squares- three sqaures 20px apart
-
-for position in starting_positons:
-    new_segment = Turtle(shape="square")
-    new_segment.color("white")
-    new_segment.penup()
-    new_segment.goto(position)
-    segments.append(new_segment)
-
-screen.update()
-
-game_is_on = True
-
-while game_is_on:
-    for seg in segments:
-        seg.forward(20)    
-
-
-screen.exitonclick()
+class Snake:
+    def __init__(self):
+        self.segments = []
+        self.create_snake()
+    def create_snake(self):
+        for position in STARTING_POSITIONS:
+            new_segment = Turtle(shape="square")
+            new_segment.color("white")
+            new_segment.penup()
+            new_segment.goto(position)
+            self.segments.append(new_segment)
+    def move(self):
+         for seg_num in range(len(self.segments) -1 ,0,-1):
+            new_x=self.segments[seg_num-1].xcor()
+            new_y=self.segments[seg_num-1].ycor()
+            self.segments[seg_num].goto(new_x,new_y)
+         self.segments[0].forward(20)
